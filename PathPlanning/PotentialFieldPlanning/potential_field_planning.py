@@ -75,14 +75,7 @@ def calc_repulsive_potential(x, y, ox, oy, rr):
 
 def get_motion_model():
     # dx, dy
-    motion = [[1, 0],
-              [0, 1],
-              [-1, 0],
-              [0, -1],
-              [-1, -1],
-              [-1, 1],
-              [1, -1],
-              [1, 1]]
+    motion = [[1, 0], [0, 1], [-1, 0], [0, -1], [-1, -1], [-1, 1], [1, -1], [1, 1]]
 
     return motion
 
@@ -90,7 +83,7 @@ def get_motion_model():
 def oscillations_detection(previous_ids, ix, iy):
     previous_ids.append((ix, iy))
 
-    if (len(previous_ids) > OSCILLATIONS_DETECTION_LENGTH):
+    if len(previous_ids) > OSCILLATIONS_DETECTION_LENGTH:
         previous_ids.popleft()
 
     # check if contains any duplicates by copying into a set
@@ -118,8 +111,10 @@ def potential_field_planning(sx, sy, gx, gy, ox, oy, reso, rr):
     if show_animation:
         draw_heatmap(pmap)
         # for stopping simulation with the esc key.
-        plt.gcf().canvas.mpl_connect('key_release_event',
-                lambda event: [exit(0) if event.key == 'escape' else None])
+        plt.gcf().canvas.mpl_connect(
+            "key_release_event",
+            lambda event: [exit(0) if event.key == "escape" else None],
+        )
         plt.plot(ix, iy, "*k")
         plt.plot(gix, giy, "*m")
 
@@ -150,7 +145,7 @@ def potential_field_planning(sx, sy, gx, gy, ox, oy, reso, rr):
         rx.append(xp)
         ry.append(yp)
 
-        if (oscillations_detection(previous_ids, ix, iy)):
+        if oscillations_detection(previous_ids, ix, iy):
             print("Oscillation detected at ({},{})!".format(ix, iy))
             break
 
@@ -171,29 +166,28 @@ def draw_heatmap(data):
 def main():
     print("potential_field_planning start")
 
-    sx = 0.0  # start x position [m]
-    sy = 10.0  # start y positon [m]
-    gx = 30.0  # goal x position [m]
-    gy = 30.0  # goal y position [m]
+    sx = 45.0  # start x position [m]
+    sy = 0.0  # start y positon [m]
+    gx = 10.0  # goal x position [m]
+    gy = 45.0  # goal y position [m]
     grid_size = 0.5  # potential grid size [m]
     robot_radius = 5.0  # robot radius [m]
 
-    ox = [15.0, 5.0, 20.0, 25.0]  # obstacle x position list [m]
-    oy = [25.0, 15.0, 26.0, 25.0]  # obstacle y position list [m]
+    ox = [26.0, 14.0, 30.0, 19.0]  # obstacle x position list [m]
+    oy = [23.0, 36.0, 13.0, 26.0]  # obstacle y position list [m]
 
     if show_animation:
         plt.grid(True)
         plt.axis("equal")
 
     # path generation
-    _, _ = potential_field_planning(
-        sx, sy, gx, gy, ox, oy, grid_size, robot_radius)
+    _, _ = potential_field_planning(sx, sy, gx, gy, ox, oy, grid_size, robot_radius)
 
     if show_animation:
         plt.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(__file__ + " start!!")
     main()
     print(__file__ + " Done!!")
