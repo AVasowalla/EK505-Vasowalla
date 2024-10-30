@@ -166,15 +166,15 @@ def draw_heatmap(data):
 def main():
     print("potential_field_planning start")
 
-    sx = 45.0  # start x position [m]
+    sx = 0.0  # start x position [m]
     sy = 0.0  # start y positon [m]
-    gx = 10.0  # goal x position [m]
-    gy = 45.0  # goal y position [m]
+    gx = 0.0  # goal x position [m]
+    gy = 30.0  # goal y position [m]
     grid_size = 0.5  # potential grid size [m]
     robot_radius = 5.0  # robot radius [m]
 
-    ox = [26.0, 14.0, 30.0, 19.0]  # obstacle x position list [m]
-    oy = [23.0, 36.0, 13.0, 26.0]  # obstacle y position list [m]
+    ox = [-2, 2]  # obstacle x position list [m]
+    oy = [15.0, 15.0]  # obstacle y position list [m]
 
     if show_animation:
         plt.grid(True)
